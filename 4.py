@@ -2,19 +2,22 @@ import sys
 import requests
 import pygame
 import os
-print("На гибриде изменять маштаб и перемещаться по карте запрещено!! Не баг а фича")
+print("На гибриде изменять маштаб и перемещаться по карте запрещено!")
+
 
 # изменение масштаба карты
 def change_spn(flag):
     global spn
-    if flag == 1:
-        if spn[0] < 64:
-            spn[0], spn[1] = spn[0] * 2, spn[1] * 2
-        show_map()
-    elif flag == 0:
-        if spn[0] > 0.00048828125:
-            spn[0], spn[1] = spn[0] / 2, spn[1] / 2
-        show_map()
+    if type_map != 'skl':
+        if flag == 1:
+            if spn[0] < 64:
+                spn[0], spn[1] = spn[0] * 2, spn[1] * 2
+            show_map()
+        elif flag == 0:
+            if spn[0] > 0.00048828125:
+                spn[0], spn[1] = spn[0] / 2, spn[1] / 2
+            show_map()
+
 
 # вывод карты
 def show_map():
@@ -33,14 +36,15 @@ def show_map():
 
 def change_coords(type):
     global coords
-    if type == "W":
-        coords = [coords[0], coords[1] + (1 / 10)]
-    elif type == "A":
-        coords = [coords[0] - (1 / 10), coords[1]]
-    elif type == "S":
-        coords = [coords[0], coords[1] - (1 / 10)]
-    elif type == "D":
-        coords = [coords[0] + (1 / 10), coords[1]]
+    if type_map != 'skl':
+        if type == "W":
+            coords = [coords[0], coords[1] + (1 / 10)]
+        elif type == "A":
+            coords = [coords[0] - (1 / 10), coords[1]]
+        elif type == "S":
+            coords = [coords[0], coords[1] - (1 / 10)]
+        elif type == "D":
+            coords = [coords[0] + (1 / 10), coords[1]]
 
 
 # изменение вида карты
