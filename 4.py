@@ -3,37 +3,19 @@ import requests
 import pygame
 import os
 
-
+# изменение масштаба карты
 def change_spn(flag):
     global spn
-    if flag:
-        spn = [spn[0] * 2, spn[1] * 2]
-    else:
-        spn = [spn[0] / 2, spn[1] / 2]
+    if flag == 1:
+        if spn[0] < 64:
+            spn[0], spn[1] = spn[0] * 2, spn[1] * 2
+        show_map()
+    elif flag == 0:
+        if spn[0] > 0.00048828125:
+            spn[0], spn[1] = spn[0] / 2, spn[1] / 2
+        show_map()
 
-
-def change_coords(type):
-    global coords
-    if type == "W":
-        coords = [coords[0], coords[1] + (1 / 10)]
-    elif type == "L":
-        coords = [coords[0] - (1 / 10), coords[1]]
-    elif type == "D":
-        coords = [coords[0], coords[1] - (1 / 10)]
-    elif type == "R":
-        coords = [coords[0] + (1 / 10), coords[1]]
-
-
-def change_map():
-    global type_map
-    if type_map == "map":
-        type_map = "sat"
-    elif type_map == "sat":
-        type_map = "skl"
-    elif type_map == "skl":
-        type_map = "map"
-
-
+# вывод карты
 def show_map():
     global pic
     maps_server = 'http://static-maps.yandex.ru/1.x/'
@@ -47,6 +29,17 @@ def show_map():
     pic = pygame.image.load('map.png')
     os.remove('map.png')
 
+# изменение вида карты
+def change_map():
+    global type_map
+    if type_map == "map":
+        type_map = "sat"
+    elif type_map == "sat":
+        type_map = "skl"
+    elif type_map == "skl":
+        type_map = "map"
+    show_map()
+
 
 spn = [0.5, 0.5]
 coords = [37.1, 57.1]
@@ -56,32 +49,20 @@ pygame.init()
 show_map()
 screen = pygame.display.set_mode((600, 450))
 running = True
+now = 0
+
+
 while running:
     screen.blit(pic, (0, 0))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        elif event.type == pygame.KEYDOWN:
-            if event.key == 109:  # Если нажимаем на M, то меняется тип карты
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_UP: # Если нажимаем на стрелку вверх, то масштаб увеличивается
+                change_spn(0)
+            elif event.key == pygame.K_DOWN: # Если нажимаем на стрелку вниз, то масштаб уменьшается
+                change_spn(1)
+            elif event.key == pygame.K_m:  # Если нажимаем на M, то меняется тип карты
                 change_map()
-                show_map()
-            elif event.key == 281:
-                change_spn(True)
-                show_map()
-            elif event.key == 280:
-                change_spn(False)
-                show_map()
-            elif event.key == 273:
-                change_coords("U")
-                show_map()
-            elif event.key == 276:
-                change_coords("L")
-                show_map()
-            elif event.key == 274:
-                change_coords("D")
-                show_map()
-            elif event.key == 275:
-                change_coords("R")
-                show_map()
     pygame.display.flip()
 pygame.quit()
