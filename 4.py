@@ -12,18 +12,6 @@ def change_spn(flag):
         spn = [spn[0] / 2, spn[1] / 2]
 
 
-def change_coords(type):
-    global coords
-    if type == "U":
-        coords = [coords[0], coords[1] + (1 / 10)]
-    elif type == "L":
-        coords = [coords[0] - (1 / 10), coords[1]]
-    elif type == "D":
-        coords = [coords[0], coords[1] - (1 / 10)]
-    elif type == "R":
-        coords = [coords[0] + (1 / 10), coords[1]]
-
-
 def change_map():
     global type_map
     if type_map == "map":
@@ -71,17 +59,6 @@ while running:
             elif event.key == 280:
                 change_spn(False)
                 show_map()
-            elif event.key == 273:
-                change_coords("U")
-                show_map()
-            elif event.key == 276:
-                change_coords("L")
-                show_map()
-            elif event.key == 274:
-                change_coords("D")
-                show_map()
-            elif event.key == 275:
-                change_coords("R")
                 show_map()
     pygame.display.flip()
 pygame.quit()
