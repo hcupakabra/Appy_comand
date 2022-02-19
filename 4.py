@@ -2,6 +2,7 @@ import sys
 import requests
 import pygame
 import os
+print("На гибриде изменять маштаб и перемещаться по карте запрещено!! Не баг а фича")
 
 # изменение масштаба карты
 def change_spn(flag):
@@ -29,6 +30,7 @@ def show_map():
     pic = pygame.image.load('map.png')
     os.remove('map.png')
 
+
 def change_coords(type):
     global coords
     if type == "W":
@@ -39,6 +41,7 @@ def change_coords(type):
         coords = [coords[0], coords[1] - (1 / 10)]
     elif type == "D":
         coords = [coords[0] + (1 / 10), coords[1]]
+
 
 # изменение вида карты
 def change_map():
