@@ -5,7 +5,8 @@ import os
 
 # Можно изменять:
 spn = [0.5, 0.5]
-coords = [35.1, 57.1]
+print('Ведите координаты через пробел:')
+coords = input()
 
 maps_server = 'http://static-maps.yandex.ru/1.x/'
 map_params = {
