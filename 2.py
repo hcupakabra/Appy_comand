@@ -3,6 +3,7 @@ import requests
 import pygame
 import os
 
+
 def change_spn(flag):
     global spn
     if flag == 1:
