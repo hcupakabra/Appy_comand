@@ -29,6 +29,17 @@ def show_map():
     pic = pygame.image.load('map.png')
     os.remove('map.png')
 
+def change_coords(type):
+    global coords
+    if type == "W":
+        coords = [coords[0], coords[1] + (1 / 10)]
+    elif type == "A":
+        coords = [coords[0] - (1 / 10), coords[1]]
+    elif type == "S":
+        coords = [coords[0], coords[1] - (1 / 10)]
+    elif type == "D":
+        coords = [coords[0] + (1 / 10), coords[1]]
+
 # изменение вида карты
 def change_map():
     global type_map
@@ -58,10 +69,22 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         if event.type == pygame.KEYUP:
-            if event.key == pygame.K_UP: # Если нажимаем на стрелку вверх, то масштаб увеличивается
+            if event.key == pygame.K_UP:  # Если нажимаем на стрелку вверх, то масштаб увеличивается
                 change_spn(0)
-            elif event.key == pygame.K_DOWN: # Если нажимаем на стрелку вниз, то масштаб уменьшается
+            elif event.key == pygame.K_DOWN:  # Если нажимаем на стрелку вниз, то масштаб уменьшается
                 change_spn(1)
+            elif event.key == pygame.K_w: # Если нажимаем W сдвигается вверх
+                change_coords("W")
+                show_map()
+            elif event.key == pygame.K_a: # Если нажимаем A сдвигается влево
+                change_coords("A")
+                show_map()
+            elif event.key == pygame.K_s: # Если нажимаем S сдвигается вниз
+                change_coords("S")
+                show_map()
+            elif event.key == pygame.K_d: # Если нажимаем D сдвигается вправо
+                change_coords("D")
+                show_map()
             elif event.key == pygame.K_m:  # Если нажимаем на M, то меняется тип карты
                 change_map()
     pygame.display.flip()

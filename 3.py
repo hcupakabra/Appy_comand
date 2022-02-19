@@ -63,16 +63,16 @@ while running:
                 change_spn(0)
             elif event.key == pygame.K_DOWN:  # Если нажимаем на стрелку вниз, то масштаб уменьшается
                 change_spn(1)
-            elif event.key == pygame.K_w:
+            elif event.key == pygame.K_w: # Если нажимаем W сдвигается вверх
                 change_coords("W")
                 show_map()
-            elif event.key == pygame.K_a:
+            elif event.key == pygame.K_a: # Если нажимаем A сдвигается влево
                 change_coords("A")
                 show_map()
-            elif event.key == pygame.K_s:
+            elif event.key == pygame.K_s: # Если нажимаем S сдвигается вниз
                 change_coords("S")
                 show_map()
-            elif event.key == pygame.K_d:
+            elif event.key == pygame.K_d: # Если нажимаем D сдвигается вправо
                 change_coords("D")
                 show_map()
 
