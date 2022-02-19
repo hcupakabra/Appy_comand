@@ -3,16 +3,19 @@ import requests
 import pygame
 import os
 
-
+# изменение масштаба карты
 def change_spn(flag):
     global spn
-    print(spn)
-    if flag:
-        spn = [spn[0] * 2, spn[1] * 2]
-    else:
-        spn = [spn[0] / 2, spn[1] / 2]
+    if flag == 1:
+        if spn[0] < 64:
+            spn[0], spn[1] = spn[0] * 2, spn[1] * 2
+        show_map()
+    elif flag == 0:
+        if spn[0] > 0.00048828125:
+            spn[0], spn[1] = spn[0] / 2, spn[1] / 2
+        show_map()
 
-
+# вывод карты
 def show_map():
     global pic
     maps_server = 'http://static-maps.yandex.ru/1.x/'
@@ -27,6 +30,18 @@ def show_map():
     os.remove('map.png')
 
 
+def change_coords(type):
+    global coords
+    if type == "W":
+        coords = [coords[0], coords[1] + (1 / 10)]
+    elif type == "A":
+        coords = [coords[0] - (1 / 10), coords[1]]
+    elif type == "S":
+        coords = [coords[0], coords[1] - (1 / 10)]
+    elif type == "D":
+        coords = [coords[0] + (1 / 10), coords[1]]
+
+
 spn = [0.5, 0.5]
 coords = [37.1, 57.1]
 type_map = "map"
@@ -36,17 +51,29 @@ show_map()
 screen = pygame.display.set_mode((600, 450))
 running = True
 now = 0
+
+
 while running:
     screen.blit(pic, (0, 0))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        elif event.type == pygame.KEYDOWN:
-            if event.key == 281:
-                change_spn(True)
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_UP:  # Если нажимаем на стрелку вверх, то масштаб увеличивается
+                change_spn(0)
+            elif event.key == pygame.K_DOWN:  # Если нажимаем на стрелку вниз, то масштаб уменьшается
+                change_spn(1)
+            elif event.key == pygame.K_w:
+                change_coords("W")
                 show_map()
-            elif event.key == 280:
-                change_spn(False)
+            elif event.key == pygame.K_a:
+                change_coords("A")
+                show_map()
+            elif event.key == pygame.K_s:
+                change_coords("S")
+                show_map()
+            elif event.key == pygame.K_d:
+                change_coords("D")
                 show_map()
 
     pygame.display.flip()
