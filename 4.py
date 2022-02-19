@@ -50,6 +50,7 @@ def change_map():
         type_map = "sat"
     elif type_map == "sat":
         type_map = "skl"
+        print("нельзя")
     elif type_map == "skl":
         type_map = "map"
     show_map()
